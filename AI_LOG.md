@@ -51,6 +51,21 @@ MSSV: [Mã số sinh viên]
     - Hạn chế: Chưa thêm icon Lucide vào thực tế (sẽ bổ sung ở Sprint sau).
     - Lỗi: Không có.
 
+    ### Lần 4: Triển khai logic vẽ cốt lõi (Sprint 2)
+    - **Mục tiêu:** Cài đặt logic vẽ các hình cơ bản (Rectangle, Circle, Line) bằng thao tác chuột và quản lý trạng thái.
+    - **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
+    - **Prompt:** "Tiếp tục đi và nhớ thực hiện test trước khi qua sprint kế" và "Tạo thêm git local để lưu lại commit cho sprint đầu đi, xong thì qua sprint 2"
+    - **Kết quả:**
+        - Khởi tạo Git local và commit Sprint 1.
+        - Cài đặt `uuid` để định danh đối tượng.
+        - Tạo `useDrawing` custom hook xử lý các sự kiện `onMouseDown`, `onMouseMove`, `onMouseUp`.
+        - Cập nhật `Canvas.tsx` để render shapes từ State và preview hình đang vẽ.
+        - Hoàn thiện `Sidebar.tsx` với icon Lucide và `PropertiesPanel.tsx` cho phép đổi màu/viền.
+        - Viết script `test-sprint2.cjs` kiểm tra logic tạo object tự động.
+    - **Đánh giá:**
+        - AI hỗ trợ tốt: Tách biệt logic vào custom hook giúp code Canvas gọn gàng. Sử dụng `uuid` đảm bảo không trùng lặp Key.
+        - Hạn chế: Phải đổi tên file test từ `.js` sang `.cjs` do cấu hình `type: module` của Vite.
+        - Lỗi: Ban đầu thiếu khai báo biến `firstPhoto` trong logic thu thập ảnh (đã sửa ngay).
 
 
 ---

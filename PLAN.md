@@ -20,10 +20,10 @@ Xây dựng ứng dụng web GUI cho phép tạo, chỉnh sửa và quản lý c
 - [x] **Verification:** Chạy `npm run build` và kiểm tra lỗi render cơ bản.
 
 ### Sprint 2: Core Drawing Engine
-- [ ] Quản lý trạng thái hình vẽ (SVG Element State).
-- [ ] Triển khai Line, Rectangle, Circle.
-- [ ] Mouse event handling cho drawing.
-- [ ] **Verification:** Script kiểm tra tính toàn vẹn của State khi thêm đối tượng mới.
+- [x] Quản lý trạng thái hình vẽ (SVG Element State).
+- [x] Triển khai Line, Rectangle, Circle.
+- [x] Mouse event handling cho drawing.
+- [x] **Verification:** Script kiểm tra tính toàn vẹn của State khi thêm đối tượng mới.
 
 ### Sprint 3: Selection & Manipulation
 - [ ] Object Selection logic.

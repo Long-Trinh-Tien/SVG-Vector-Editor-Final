@@ -1,9 +1,22 @@
+import { useState } from 'react'
 import Sidebar from './components/Sidebar'
 import Canvas from './components/Canvas'
 import PropertiesPanel from './components/PropertiesPanel'
+import { Shape, ShapeType } from './types/svg'
 import './App.css'
 
 function App() {
+  const [shapes, setShapes] = useState<Shape[]>([])
+  const [selectedTool, setSelectedTool] = useState<ShapeType | 'select'>('select')
+  const [selectedShapeId, setSelectedShapeId] = useState<string | null>(null)
+  
+  const [currentStyle, setCurrentToolStyle] = useState({
+    fill: '#e66465',
+    stroke: '#000000',
+    strokeWidth: 2,
+    opacity: 1
+  })
+
   return (
     <div className="app-layout">
       <header className="app-header">
@@ -14,9 +27,26 @@ function App() {
         </div>
       </header>
       <div className="app-body">
-        <Sidebar />
-        <Canvas />
-        <PropertiesPanel />
+        <Sidebar 
+          selectedTool={selectedTool} 
+          onSelectTool={setSelectedTool} 
+        />
+        <Canvas 
+          shapes={shapes} 
+          setShapes={setShapes}
+          selectedTool={selectedTool}
+          currentStyle={currentStyle}
+          selectedShapeId={selectedShapeId}
+          onSelectShape={setSelectedShapeId}
+        />
+        <PropertiesPanel 
+          selectedShape={shapes.find(s => s.id === selectedShapeId) || null}
+          currentStyle={currentStyle}
+          onStyleChange={setCurrentToolStyle}
+          onUpdateShape={(updatedShape) => {
+            setShapes(shapes.map(s => s.id === updatedShape.id ? updatedShape : s))
+          }}
+        />
       </div>
     </div>
   )

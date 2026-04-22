@@ -85,6 +85,20 @@
   min-height: 600px;
 }
 
+.selected-shape {
+  stroke-dasharray: 5, 5;
+  animation: dash 1s linear infinite;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 10;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 .properties-panel {
   width: 250px;
   background-color: #ffffff;

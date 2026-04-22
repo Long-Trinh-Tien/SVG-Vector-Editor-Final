@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Shape } from '../types/svg';
+import { ArrowUp, ArrowDown } from 'lucide-react';
 
 interface PropertiesPanelProps {
   selectedShape: Shape | null;
@@ -11,13 +12,17 @@ interface PropertiesPanelProps {
   };
   onStyleChange: (style: any) => void;
   onUpdateShape: (shape: Shape) => void;
+  onBringToFront: () => void;
+  onSendToBack: () => void;
 }
 
 const PropertiesPanel: React.FC<PropertiesPanelProps> = ({ 
   selectedShape, 
   currentStyle, 
   onStyleChange,
-  onUpdateShape 
+  onUpdateShape,
+  onBringToFront,
+  onSendToBack
 }) => {
   const handleChange = (field: string, value: any) => {
     if (selectedShape) {
@@ -37,13 +42,31 @@ const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
 
   return (
     <aside className="properties-panel">
-      <h3>{selectedShape ? `Edit ${selectedShape.type.toUpperCase()}` : 'Default Style'}</h3>
+      <div className="panel-header">
+        <h3>{selectedShape ? `Edit ${selectedShape.type.toUpperCase()}` : 'Default Style'}</h3>
+      </div>
       
-      {/* Text specific properties */}
+      {selectedShape && (
+        <div className="prop-section">
+          <label className="section-label">Layers</label>
+          <div className="layer-actions">
+            <button className="icon-btn" onClick={onBringToFront} title="Bring to Front">
+              <ArrowUp size={16} />
+              <span>Bring to Front</span>
+            </button>
+            <button className="icon-btn" onClick={onSendToBack} title="Send to Back">
+              <ArrowDown size={16} />
+              <span>Send to Back</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {selectedShape?.type === 'text' && (
         <div className="prop-section">
+          <label className="section-label">Typography</label>
           <div className="prop-group">
-            <label>Text Content</label>
+            <label>Content</label>
             <input 
               type="text" 
               value={selectedShape.text} 
@@ -64,6 +87,7 @@ const PropertiesPanel: React.FC<PropertiesPanelProps> = ({
       )}
 
       <div className="prop-section">
+        <label className="section-label">Appearance</label>
         <div className="prop-group">
           <label>Fill</label>
           <input 

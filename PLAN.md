@@ -31,9 +31,9 @@ Xây dựng ứng dụng web GUI cho phép tạo, chỉnh sửa và quản lý c
 - [x] **Verification:** Test script mô phỏng hành động click chọn và di chuyển tọa độ.
 
 ### Sprint 4: Properties & Styling
-- [ ] UI cho Properties Panel.
-- [ ] Stroke, Fill, Opacity, Stroke-width updates.
-- [ ] **Verification:** Kiểm tra việc áp dụng thuộc tính vào thẻ SVG output.
+- [x] UI cho Properties Panel.
+- [x] Stroke, Fill, Opacity, Stroke-width updates.
+- [x] **Verification:** Kiểm tra việc áp dụng thuộc tính vào thẻ SVG output.
 
 ### Sprint 5: Advanced Shapes & Persistence
 - [ ] Polygon drawing (Multi-point).

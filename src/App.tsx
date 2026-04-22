@@ -17,6 +17,20 @@ function App() {
     opacity: 1
   })
 
+  const bringToFront = () => {
+    if (!selectedShapeId) return;
+    const shape = shapes.find(s => s.id === selectedShapeId);
+    if (!shape) return;
+    setShapes([...shapes.filter(s => s.id !== selectedShapeId), shape]);
+  };
+
+  const sendToBack = () => {
+    if (!selectedShapeId) return;
+    const shape = shapes.find(s => s.id === selectedShapeId);
+    if (!shape) return;
+    setShapes([shape, ...shapes.filter(s => s.id !== selectedShapeId)]);
+  };
+
   return (
     <div className="app-layout">
       <header className="app-header">
@@ -46,6 +60,8 @@ function App() {
           onUpdateShape={(updatedShape) => {
             setShapes(shapes.map(s => s.id === updatedShape.id ? updatedShape : s))
           }}
+          onBringToFront={bringToFront}
+          onSendToBack={sendToBack}
         />
       </div>
     </div>

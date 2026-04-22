@@ -101,6 +101,20 @@ MSSV: [Mã số sinh viên]
     - Hạn chế: Việc vẽ đa giác yêu cầu phím tắt hoặc double click nên cần có chỉ dẫn UI cho người dùng (Tooltip).
     - Lỗi: Không có.
 
+### Lần 9: Tinh chỉnh Bảng thuộc tính và Quản lý lớp (Sprint 4)
+- **Mục tiêu:** Hoàn thiện UI bảng Properties, cho phép thay đổi thuộc tính của hình đã vẽ và hỗ trợ sắp xếp thứ tự hiển thị (Z-index).
+- **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
+- **Prompt:** "Đã thấy, tiếp tục sprint kế tiếp"
+- **Kết quả:**
+    - Nâng cấp `PropertiesPanel.tsx`: Chia nhóm thuộc tính (Typography, Appearance, Layers).
+    - Triển khai tính năng Z-Index trong `App.tsx`: `bringToFront` (đưa lên trên) và `sendToBack` (đưa xuống dưới) bằng cách thay đổi thứ tự phần tử trong mảng `shapes`.
+    - Cập nhật CSS: Giao diện bảng điều khiển hiện đại, dùng hệ thống Grid cho các nút thao tác.
+    - Viết script `test-sprint4.cjs` xác nhận logic thay đổi thứ tự mảng hoạt động đúng.
+- **Đánh giá:**
+    - AI hỗ trợ tốt: Thiết kế giao diện Properties chuyên nghiệp, dễ mở rộng. Logic Z-index đơn giản nhưng hiệu quả cho SVG.
+    - Hạn chế: Chưa hỗ trợ tính năng "Move Forward" hoặc "Move Backward" từng bước (chỉ có lên đầu/xuống cuối).
+    - Lỗi: Không có.
+
 ### Lần 8: Triển khai công cụ Văn bản (Text Tool)
 - **Mục tiêu:** Cho phép người dùng chèn và chỉnh sửa nội dung văn bản trên Canvas.
 - **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).

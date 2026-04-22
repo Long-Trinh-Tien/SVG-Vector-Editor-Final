@@ -84,6 +84,21 @@ MSSV: [Mã số sinh viên]
         - Lỗi: Toạ độ sai lệch và giá trị âm cho thuộc tính SVG.
         - Bài học: Luôn sử dụng toạ độ nội bộ của SVG (`getScreenCTM`) thay vì toạ độ viewport của trình duyệt.
 
+### Lần 7: Triển khai logic chọn, di chuyển và xóa hình (Sprint 3)
+- **Mục tiêu:** Cho phép người dùng tương tác với các hình đã vẽ: Chọn hình, kéo thả để di chuyển và nhấn Delete để xóa.
+- **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
+- **Prompt:** "Đã vẽ được tròn,vuông, đường thẳng. Polygon chưa được. Tiếp tục qua sprint 3, giữ nguyên các bước test như vậy"
+- **Kết quả:**
+    - Tạo `useManipulation.ts` xử lý logic dragging thông qua `delta` (dx, dy).
+    - Cập nhật `Canvas.tsx` để phân tách hai chế độ: Drawing (khi chọn công cụ hình) và Manipulation (khi chọn công cụ Select).
+    - Thêm `useEffect` lắng nghe sự kiện bàn phím (`Delete`, `Backspace`) để xóa đối tượng đang chọn.
+    - Cải thiện UX: Đổi con trỏ chuột sang `move` khi di chuyển hình và `pointer` khi có thể chọn.
+    - Viết script `test-sprint3.cjs` kiểm tra logic tính toán toạ độ khi di chuyển.
+- **Đánh giá:**
+    - AI hỗ trợ tốt: Giải quyết tốt vấn đề `e.stopPropagation()` để không làm mất selection khi click vào hình. Logic di chuyển dùng delta giúp hình không bị nhảy toạ độ khi bắt đầu kéo.
+    - Hạn chế: Chưa hỗ trợ chọn nhiều hình cùng lúc (Multi-select).
+    - Lỗi: Không có.
+
 ### Lần 6: Sửa lỗi Build liên quan đến TypeScript Import Type (Sprint 2 - Build fix)
 - **Mục tiêu:** Khắc phục lỗi biên dịch `TS1484` do cấu hình `verbatimModuleSyntax`.
 - **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash) + Generalist Subagent.

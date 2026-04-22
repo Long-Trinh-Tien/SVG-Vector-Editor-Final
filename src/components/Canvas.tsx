@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import type { Shape, ShapeType, BaseShape } from '../types/svg';
 import { useDrawing } from '../hooks/useDrawing';
+import { useManipulation } from '../hooks/useManipulation';
 
 interface CanvasProps {
   shapes: Shape[];
@@ -26,6 +27,27 @@ const Canvas: React.FC<CanvasProps> = ({
     currentStyle
   );
 
+  const { startDragging, handleDrag, endDragging } = useManipulation(
+    shapes,
+    setShapes,
+    selectedTool,
+    selectedShapeId,
+    onSelectShape
+  );
+
+  // Handle Keyboard Delete
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.key === 'Delete' || e.key === 'Backspace') && selectedShapeId) {
+        setShapes(shapes.filter(s => s.id !== selectedShapeId));
+        onSelectShape(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedShapeId, shapes, setShapes, onSelectShape]);
+
   const renderShape = (shape: Shape) => {
     const isSelected = shape.id === selectedShapeId;
     const commonProps = {
@@ -34,14 +56,11 @@ const Canvas: React.FC<CanvasProps> = ({
       fill: shape.fill,
       strokeWidth: shape.strokeWidth,
       opacity: shape.opacity,
-      onClick: (e: React.MouseEvent) => {
-        if (selectedTool === 'select') {
-          e.stopPropagation();
-          onSelectShape(shape.id);
-        }
-      },
-      style: { cursor: selectedTool === 'select' ? 'pointer' : 'crosshair' },
-      className: isSelected ? 'selected-shape' : ''
+      onMouseDown: (e: React.MouseEvent) => startDragging(e, shape.id),
+      className: isSelected ? 'selected-shape' : '',
+      style: { 
+        cursor: selectedTool === 'select' ? 'move' : 'crosshair' 
+      }
     };
 
     switch (shape.type) {
@@ -56,17 +75,41 @@ const Canvas: React.FC<CanvasProps> = ({
     }
   };
 
+  const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
+    if (selectedTool === 'select') {
+      onSelectShape(null);
+    } else {
+      startDrawing(e);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+    if (selectedTool === 'select') {
+      handleDrag(e);
+    } else {
+      draw(e);
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (selectedTool === 'select') {
+      endDragging();
+    } else {
+      endDrawing();
+    }
+  };
+
   return (
-    <main className="canvas-container" onClick={() => onSelectShape(null)}>
+    <main className="canvas-container">
       <svg 
         className="drawing-canvas" 
         width="800" 
         height="600" 
         viewBox="0 0 800 600"
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={endDrawing}
-        onMouseLeave={endDrawing}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
       >
         <rect width="100%" height="100%" fill="#ffffff" />
         {shapes.map(renderShape)}

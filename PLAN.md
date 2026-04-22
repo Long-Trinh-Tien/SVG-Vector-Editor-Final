@@ -26,9 +26,9 @@ Xây dựng ứng dụng web GUI cho phép tạo, chỉnh sửa và quản lý c
 - [x] **Verification:** Script kiểm tra tính toàn vẹn của State khi thêm đối tượng mới.
 
 ### Sprint 3: Selection & Manipulation
-- [ ] Object Selection logic.
-- [ ] Move và Delete (Keyboard support).
-- [ ] **Verification:** Test script mô phỏng hành động click chọn và di chuyển tọa độ.
+- [x] Object Selection logic.
+- [x] Move và Delete (Keyboard support).
+- [x] **Verification:** Test script mô phỏng hành động click chọn và di chuyển tọa độ.
 
 ### Sprint 4: Properties & Styling
 - [ ] UI cho Properties Panel.

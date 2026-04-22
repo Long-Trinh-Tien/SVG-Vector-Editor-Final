@@ -36,10 +36,10 @@ Xây dựng ứng dụng web GUI cho phép tạo, chỉnh sửa và quản lý c
 - [x] **Verification:** Kiểm tra việc áp dụng thuộc tính vào thẻ SVG output.
 
 ### Sprint 5: Advanced Shapes & Persistence
-- [ ] Polygon drawing (Multi-point).
-- [ ] Text elements đính kèm.
-- [ ] Export/Import SVG file.
-- [ ] **Verification:** Script so sánh nội dung file Export và Import.
+- [x] Polygon drawing (Multi-point).
+- [x] Text elements đính kèm.
+- [x] Export/Import SVG file.
+- [x] **Verification:** Script so sánh nội dung file Export và Import.
 
 ### Sprint 6: Final Polish & Report
 - [ ] UI Refinement (Transitions, Clean UX).

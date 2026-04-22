@@ -101,18 +101,38 @@ MSSV: [Mã số sinh viên]
     - Hạn chế: Việc vẽ đa giác yêu cầu phím tắt hoặc double click nên cần có chỉ dẫn UI cho người dùng (Tooltip).
     - Lỗi: Không có.
 
-### Lần 9: Tinh chỉnh Bảng thuộc tính và Quản lý lớp (Sprint 4)
-- **Mục tiêu:** Hoàn thiện UI bảng Properties, cho phép thay đổi thuộc tính của hình đã vẽ và hỗ trợ sắp xếp thứ tự hiển thị (Z-index).
+### Lần 10: Sửa lỗi hiển thị (Contrast Fix) và hoàn thiện giao diện
+- **Mục tiêu:** Khắc phục tình trạng chữ trắng trên nền trắng gây khó nhìn, cải thiện trải nghiệm người dùng tổng thể.
 - **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
-- **Prompt:** "Đã thấy, tiếp tục sprint kế tiếp"
+- **Prompt:** "Nền trắng chữ trắng nên không thấy rõ tính năng, sửa lại đi"
 - **Kết quả:**
-    - Nâng cấp `PropertiesPanel.tsx`: Chia nhóm thuộc tính (Typography, Appearance, Layers).
-    - Triển khai tính năng Z-Index trong `App.tsx`: `bringToFront` (đưa lên trên) và `sendToBack` (đưa xuống dưới) bằng cách thay đổi thứ tự phần tử trong mảng `shapes`.
-    - Cập nhật CSS: Giao diện bảng điều khiển hiện đại, dùng hệ thống Grid cho các nút thao tác.
-    - Viết script `test-sprint4.cjs` xác nhận logic thay đổi thứ tự mảng hoạt động đúng.
+    - Cập nhật toàn diện `App.css`:
+        - Thiết lập hệ thống màu chữ (`color: #1e293b`) rõ ràng cho toàn bộ ứng dụng.
+        - Thay đổi màu nền Sidebar và Properties sang trắng thuần, Header có bóng đổ nhẹ.
+        - Cải thiện độ tương phản của Input và Nút bấm bằng màu xám nhạt (`#f8fafc`) và viền rõ nét hơn.
+        - Tăng kích thước Sidebar để biểu tượng và chữ không bị dính nhau.
+    - Build: Thành công.
 - **Đánh giá:**
-    - AI hỗ trợ tốt: Thiết kế giao diện Properties chuyên nghiệp, dễ mở rộng. Logic Z-index đơn giản nhưng hiệu quả cho SVG.
-    - Hạn chế: Chưa hỗ trợ tính năng "Move Forward" hoặc "Move Backward" từng bước (chỉ có lên đầu/xuống cuối).
+    - AI hỗ trợ tốt: Khắc phục nhanh lỗi UI, tạo ra giao diện có độ tương phản cao, chuyên nghiệp hơn phiên bản trước.
+    - Hạn chế: Chưa sử dụng các biến CSS (CSS Variables) để quản lý màu sắc tập trung.
+    - Lỗi: Độ tương phản thấp (White-on-White).
+    - Bài học: Luôn chỉ định màu chữ (`color`) khi thay đổi màu nền (`background-color`) để đảm bảo tính dễ đọc.
+
+### Lần 11: Triển khai tính năng Lưu và Mở file SVG (Sprint 5)
+- **Mục tiêu:** Cho phép người dùng xuất bản vẽ ra file `.svg` và tải lại file đã lưu để tiếp tục chỉnh sửa.
+- **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
+- **Prompt:** "Tiếp tục đi" (Tiếp tục Sprint 5 theo kế hoạch).
+- **Kết quả:**
+    - Tạo `svgParser.ts`:
+        - `exportToSVG`: Chuyển đổi mảng `shapes` sang mã nguồn XML SVG (bao gồm cả XML declaration).
+        - `parseSVG`: Sử dụng `DOMParser` để duyệt cây XML của file tải lên và chuyển ngược thành mảng `Shape` để đưa vào React State.
+    - Cập nhật `App.tsx`:
+        - `handleSave`: Sử dụng `Blob` và `URL.createObjectURL` để tạo link tải về tự động.
+        - `handleOpen`: Sử dụng `FileReader` để đọc nội dung file văn bản từ thẻ `<input type="file">`.
+    - Kiểm thử: `test-sprint5.cjs` xác nhận cấu trúc XML sinh ra khớp với dữ liệu đầu vào. Build thành công.
+- **Đánh giá:**
+    - AI hỗ trợ tốt: Xử lý tốt việc parse XML phức tạp của SVG thành cấu trúc dữ liệu phẳng cho State. Tích hợp tính năng tải file mượt mà.
+    - Hạn chế: Việc parse đang ở mức cơ bản, có thể chưa xử lý hết các thuộc tính SVG phức tạp từ các phần mềm khác (như Illustrator).
     - Lỗi: Không có.
 
 ### Lần 8: Triển khai công cụ Văn bản (Text Tool)

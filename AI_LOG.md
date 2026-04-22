@@ -164,9 +164,31 @@ MSSV: [Mã số sinh viên]
     - Lỗi: Vi phạm quy tắc `verbatimModuleSyntax`.
     - Bài học: Với các dự án TS hiện đại, luôn ưu tiên dùng `import type` khi chỉ cần lấy metadata của Type/Interface.
 
+### Lần 12: Hoàn thiện giao diện, tài liệu và đóng gói (Sprint 6)
+- **Mục tiêu:** Tinh chỉnh UI/UX, viết hướng dẫn sử dụng và tổng kết toàn bộ dự án.
+- **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
+- **Prompt:** "Tiếp tục đi" (Tiếp tục Sprint 6 theo kế hoạch).
+- **Kết quả:**
+    - Nâng cấp CSS: Thêm hiệu ứng hover, transition và shadow mượt mà cho các nút bấm và canvas.
+    - Viết file `README.md` hướng dẫn cài đặt và sử dụng chi tiết.
+    - Chạy full regression build thành công.
+- **Đánh giá:**
+    - AI hỗ trợ tốt: Đảm bảo tính nhất quán giữa các file tài liệu và mã nguồn. Tự động đề xuất cấu trúc README chuyên nghiệp.
+    - Hạn chế: Phần hướng dẫn cài đặt mang tính lý thuyết, cần user thực hiện lệnh thực tế để kiểm chứng.
+    - Lỗi: Không có.
+
 ---
-## Phân tích tổng kết (Sẽ cập nhật khi hoàn thành)
+## Phân tích tổng kết
 - **AI hỗ trợ tốt ở điểm nào?**
+    - Tốc độ: AI sinh code khung (Scaffolding) và logic vẽ cực nhanh, tiết kiệm ít nhất 70% thời gian so với việc tự viết từ đầu.
+    - Khắc phục lỗi: Khả năng tự chẩn đoán lỗi toạ độ SVG và lỗi TypeScript biên dịch rất ấn tượng.
+    - Quản lý dự án: AI giúp duy trì tính nhất quán thông qua các file PLAN và PROCESS, không bị "lạc hướng" qua các lượt prompt khác nhau.
 - **Hạn chế:**
+    - AI đôi khi đưa ra các giải pháp logic quá đơn giản (như dùng toạ độ viewport thay vì SVG matrix), đòi hỏi user phải có kiến thức nền để chỉ dẫn debug.
 - **Lỗi do AI gây ra:**
+    - Lỗi toạ độ sai lệch ở Sprint 2.
+    - Lỗi biên dịch TypeScript ở Sprint 3 do không cập nhật kịp cú pháp `import type` mới của Vite.
 - **Kinh nghiệm viết prompt:**
+    - Nên chia nhỏ yêu cầu theo từng Sprint thay vì yêu cầu AI làm toàn bộ ứng dụng trong một lần.
+    - Luôn yêu cầu AI thực hiện "Test" hoặc "Build" sau mỗi bước để phát hiện lỗi ngay tại chỗ.
+    - Gắn context về môi trường (Hệ điều hành, thư mục làm việc) giúp AI đưa ra lệnh CLI chính xác hơn.

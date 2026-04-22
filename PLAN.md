@@ -42,10 +42,10 @@ Xây dựng ứng dụng web GUI cho phép tạo, chỉnh sửa và quản lý c
 - [x] **Verification:** Script so sánh nội dung file Export và Import.
 
 ### Sprint 6: Final Polish & Report
-- [ ] UI Refinement (Transitions, Clean UX).
-- [ ] Viết tài liệu hướng dẫn.
-- [ ] Hoàn thiện `AI_LOG.md`.
-- [ ] **Verification:** Full Regression Test trên trình duyệt.
+- [x] UI Refinement (Transitions, Clean UX).
+- [x] Viết tài liệu hướng dẫn.
+- [x] Hoàn thiện `AI_LOG.md`.
+- [x] **Verification:** Full Regression Test trên trình duyệt.
 
 ## 4. Testing & Verification Strategy
 Mỗi Sprint chỉ được coi là hoàn thành khi:

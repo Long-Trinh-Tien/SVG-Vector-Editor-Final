@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# SVG Vector Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ứng dụng GUI cho phép tạo và chỉnh sửa các đối tượng đồ họa dựa trên chuẩn SVG, phát triển bằng React + TypeScript.
 
-Currently, two official plugins are available:
+## 1. Tính năng chính
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Công cụ vẽ cơ bản:** 
+  - Rectangle (Hình chữ nhật)
+  - Circle (Hình tròn)
+  - Line (Đường thẳng)
+  - Polygon (Đa giác - Click nhiều điểm, Enter/Double Click để hoàn tất)
+  - Text (Văn bản - Click để đặt, sửa nội dung trong bảng Properties)
+- **Thao tác đối tượng:**
+  - Chọn đối tượng (Select tool)
+  - Di chuyển (Kéo thả)
+  - Xóa (Phím Delete/Backspace)
+  - Sắp xếp lớp (Bring to Front, Send to Back)
+- **Tùy chỉnh thuộc tính:**
+  - Thay đổi màu nền (Fill), màu viền (Stroke).
+  - Độ dày nét vẽ (Stroke Width).
+  - Độ trong suốt (Opacity).
+- **Quản lý tập tin:**
+  - Save SVG: Xuất bản vẽ ra file `.svg` tiêu chuẩn.
+  - Open SVG: Tải file `.svg` từ máy để tiếp tục chỉnh sửa.
 
-## React Compiler
+## 2. Hướng dẫn cài đặt và chạy thử
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Yêu cầu hệ thống
+- Node.js (phiên bản 18 trở lên).
 
-## Expanding the ESLint configuration
+### Các bước thực hiện
+1. **Cài đặt thư viện:**
+   ```bash
+   npm install
+   ```
+2. **Chạy ở chế độ phát triển (Development):**
+   ```bash
+   npm run dev
+   ```
+   Sau đó truy cập địa chỉ `http://localhost:5173`.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+3. **Xây dựng bản chính thức (Build):**
+   ```bash
+   npm run build
+   ```
+4. **Xem trước bản build:**
+   ```bash
+   npm run preview
+   ```
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 3. Nhật ký sử dụng AI
+Dự án được hỗ trợ phát triển bởi Gemini CLI. Chi tiết các phiên làm việc và câu lệnh prompt được lưu trữ tại file `AI_LOG.md`.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 4. Tác giả
+- Sinh viên: [Họ tên]
+- MSSV: [Mã số sinh viên]
+- Lớp: [Tên lớp]

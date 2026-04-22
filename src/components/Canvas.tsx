@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shape, ShapeType, BaseShape } from '../types/svg';
+import type { Shape, ShapeType, BaseShape } from '../types/svg';
 import { useDrawing } from '../hooks/useDrawing';
 
 interface CanvasProps {

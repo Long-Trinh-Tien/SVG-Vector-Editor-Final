@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shape } from '../types/svg';
+import type { Shape } from '../types/svg';
 
 interface PropertiesPanelProps {
   selectedShape: Shape | null;

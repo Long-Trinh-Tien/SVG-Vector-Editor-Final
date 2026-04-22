@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Sidebar from './components/Sidebar'
 import Canvas from './components/Canvas'
 import PropertiesPanel from './components/PropertiesPanel'
-import { Shape, ShapeType } from './types/svg'
+import type { Shape, ShapeType } from './types/svg'
 import './App.css'
 
 function App() {

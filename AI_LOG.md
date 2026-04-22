@@ -67,6 +67,36 @@ MSSV: [Mã số sinh viên]
         - Hạn chế: Phải đổi tên file test từ `.js` sang `.cjs` do cấu hình `type: module` của Vite.
         - Lỗi: Ban đầu thiếu khai báo biến `firstPhoto` trong logic thu thập ảnh (đã sửa ngay).
 
+        ### Lần 5: Debug lỗi không vẽ được hình (Sprint 2 - Hotfix)
+        - **Mục tiêu:** Khắc phục lỗi giao diện hiện nhưng không thao tác vẽ được.
+        - **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
+        - **Prompt:** "Có giao diện nhưng không vẽ gì được hãy debug đi ? thêm những cái này vào AI_LOG luôn"
+        - **Kết quả:**
+        - Phân tích và phát hiện lỗi toạ độ do dùng `clientX/Y` trực tiếp thay vì chuyển đổi sang toạ độ SVG (`matrixTransform`).
+        - Phát hiện lỗi không hiển thị được `rect` khi kéo ngược hướng (width/height âm).
+        - Cập nhật `useDrawing.ts`:
+            - Sử dụng `getSVGCoordinates` để lấy toạ độ chính xác trong không gian `viewBox`.
+            - Sử dụng `Math.min` và `Math.abs` cho Rectangle để hỗ trợ vẽ đa hướng.
+            - Thêm logic `isValid` để tránh tạo ra các hình có kích thước bằng 0 (dot) khi vô tình click.
+        - **Đánh giá:**
+        - AI hỗ trợ tốt: Tự chẩn đoán được các lỗi phổ biến khi làm việc với SVG mà không cần user mô tả kỹ thuật.
+        - Hạn chế: Logic ban đầu quá đơn giản, không tính đến trường hợp người dùng kéo chuột ngược hướng.
+        - Lỗi: Toạ độ sai lệch và giá trị âm cho thuộc tính SVG.
+        - Bài học: Luôn sử dụng toạ độ nội bộ của SVG (`getScreenCTM`) thay vì toạ độ viewport của trình duyệt.
+
+### Lần 6: Sửa lỗi Build liên quan đến TypeScript Import Type (Sprint 2 - Build fix)
+- **Mục tiêu:** Khắc phục lỗi biên dịch `TS1484` do cấu hình `verbatimModuleSyntax`.
+- **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash) + Generalist Subagent.
+- **Prompt:** "npm run build còn lỗi mà, fix cho xong, test rồi hẳn tiếp"
+- **Kết quả:**
+    - Phát hiện cấu hình TypeScript mới yêu cầu sử dụng `import type` cho các khai báo kiểu dữ liệu.
+    - Cập nhật 5 file nguồn (`App.tsx`, `Canvas.tsx`, `PropertiesPanel.tsx`, `Sidebar.tsx`, `useDrawing.ts`) sang cú pháp `import type`.
+    - Chạy `npm run build` thành công rực rỡ.
+- **Đánh giá:**
+    - AI hỗ trợ tốt: Sửa lỗi hàng loạt nhanh chóng thông qua subagent.
+    - Hạn chế: Chưa cập nhật kịp với template tsconfig mặc định mới nhất của Vite ngay từ đầu.
+    - Lỗi: Vi phạm quy tắc `verbatimModuleSyntax`.
+    - Bài học: Với các dự án TS hiện đại, luôn ưu tiên dùng `import type` khi chỉ cần lấy metadata của Type/Interface.
 
 ---
 ## Phân tích tổng kết (Sẽ cập nhật khi hoàn thành)

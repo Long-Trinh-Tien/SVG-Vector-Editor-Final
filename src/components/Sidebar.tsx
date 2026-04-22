@@ -1,6 +1,6 @@
 import React from 'react';
 import { MousePointer2, Square, Circle, Minus, Type, Hexagon } from 'lucide-react';
-import { ShapeType } from '../types/svg';
+import type { ShapeType } from '../types/svg';
 
 interface SidebarProps {
   selectedTool: ShapeType | 'select';

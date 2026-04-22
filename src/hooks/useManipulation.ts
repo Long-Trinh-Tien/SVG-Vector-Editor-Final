@@ -11,11 +11,10 @@ export const useManipulation = (
   const [isDragging, setIsDragging] = useState(false);
   const lastMousePos = useRef({ x: 0, y: 0 });
 
-  const getSVGCoordinates = (e: React.MouseEvent<SVGSVGElement>) => {
-    const svg = e.currentTarget;
+  const getSVGCoordinates = (svg: SVGSVGElement, clientX: number, clientY: number) => {
     const point = svg.createSVGPoint();
-    point.x = e.clientX;
-    point.y = e.clientY;
+    point.x = clientX;
+    point.y = clientY;
     const CTM = svg.getScreenCTM();
     if (!CTM) return { x: 0, y: 0 };
     return point.matrixTransform(CTM.inverse());
@@ -29,14 +28,14 @@ export const useManipulation = (
     setIsDragging(true);
 
     const svg = (e.currentTarget as any).ownerSVGElement || e.currentTarget;
-    const { x, y } = getSVGCoordinates({ clientX: e.clientX, clientY: e.clientY, currentTarget: svg } as any);
+    const { x, y } = getSVGCoordinates(svg, e.clientX, e.clientY);
     lastMousePos.current = { x, y };
   }, [selectedTool, onSelectShape]);
 
   const handleDrag = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     if (!isDragging || !selectedShapeId || selectedTool !== 'select') return;
 
-    const { x, y } = getSVGCoordinates(e);
+    const { x, y } = getSVGCoordinates(e.currentTarget, e.clientX, e.clientY);
     const dx = x - lastMousePos.current.x;
     const dy = y - lastMousePos.current.y;
     lastMousePos.current = { x, y };
@@ -51,6 +50,13 @@ export const useManipulation = (
           return { ...shape, cx: shape.cx + dx, cy: shape.cy + dy };
         case 'line':
           return { ...shape, x1: shape.x1 + dx, y1: shape.y1 + dy, x2: shape.x2 + dx, y2: shape.y2 + dy };
+        case 'polygon':
+          return {
+            ...shape,
+            points: shape.points.map(p => ({ x: p.x + dx, y: p.y + dy }))
+          };
+        case 'text':
+          return { ...shape, x: shape.x + dx, y: shape.y + dy };
         default:
           return shape;
       }

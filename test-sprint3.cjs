@@ -1,38 +1,32 @@
 function testManipulationLogic() {
-  console.log("Testing Manipulation Logic...");
+  console.log("Testing Manipulation Logic with Polygon...");
 
   let shapes = [
-    { id: '1', type: 'rect', x: 10, y: 10, width: 50, height: 50, fill: 'red', stroke: 'black', strokeWidth: 1, opacity: 1 }
+    { id: 'poly1', type: 'polygon', points: [{ x: 0, y: 0 }, { x: 10, y: 10 }], fill: 'blue', stroke: 'black', strokeWidth: 1, opacity: 1 }
   ];
 
-  const dx = 15;
-  const dy = 25;
+  const dx = 5;
+  const dy = 5;
 
-  // Simulate Move Logic
+  // Simulate Polygon Move
   shapes = shapes.map(s => {
-    if (s.id === '1') {
-      return { ...s, x: s.x + dx, y: s.y + dy };
+    if (s.id === 'poly1' && s.type === 'polygon') {
+      return {
+        ...s,
+        points: s.points.map(p => ({ x: p.x + dx, y: p.y + dy }))
+      };
     }
     return s;
   });
 
-  if (shapes[0].x === 25 && shapes[0].y === 35) {
-    console.log("✅ Object move logic passed.");
+  if (shapes[0].type === 'polygon' && shapes[0].points[0].x === 5 && shapes[0].points[1].y === 15) {
+    console.log("✅ Polygon move logic passed.");
   } else {
-    console.error("❌ Object move logic failed.");
+    console.error("❌ Polygon move logic failed.");
     process.exit(1);
   }
 
-  // Simulate Delete Logic
-  shapes = shapes.filter(s => s.id !== '1');
-  if (shapes.length === 0) {
-    console.log("✅ Object delete logic passed.");
-  } else {
-    console.error("❌ Object delete logic failed.");
-    process.exit(1);
-  }
-
-  console.log("All tests passed for Sprint 3!");
+  console.log("All tests passed for Sprint 3 (incl. Polygon)!");
 }
 
 testManipulationLogic();

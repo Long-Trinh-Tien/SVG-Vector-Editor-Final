@@ -20,11 +20,12 @@ const Canvas: React.FC<CanvasProps> = ({
   selectedShapeId,
   onSelectShape 
 }) => {
-  const { currentShape, startDrawing, draw, endDrawing } = useDrawing(
+  const { currentShape, startDrawing, draw, endDrawing, finishPolygon } = useDrawing(
     shapes, 
     setShapes, 
     selectedTool, 
-    currentStyle
+    currentStyle,
+    onSelectShape
   );
 
   const { startDragging, handleDrag, endDragging } = useManipulation(
@@ -59,7 +60,8 @@ const Canvas: React.FC<CanvasProps> = ({
       onMouseDown: (e: React.MouseEvent) => startDragging(e, shape.id),
       className: isSelected ? 'selected-shape' : '',
       style: { 
-        cursor: selectedTool === 'select' ? 'move' : 'crosshair' 
+        cursor: selectedTool === 'select' ? 'move' : 'crosshair',
+        userSelect: 'none' as const
       }
     };
 
@@ -70,6 +72,22 @@ const Canvas: React.FC<CanvasProps> = ({
         return <circle {...commonProps} cx={shape.cx} cy={shape.cy} r={shape.r} />;
       case 'line':
         return <line {...commonProps} x1={shape.x1} y1={shape.y1} x2={shape.x2} y2={shape.y2} />;
+      case 'polygon':
+        const pointsString = shape.points.map(p => `${p.x},${p.y}`).join(' ');
+        return <polygon {...commonProps} points={pointsString} />;
+      case 'text':
+        return (
+          <text 
+            {...commonProps} 
+            x={shape.x} 
+            y={shape.y} 
+            fontSize={shape.fontSize}
+            stroke="none" // Text usually doesn't have stroke by default in editors
+            fill={shape.fill}
+          >
+            {shape.text}
+          </text>
+        );
       default:
         return null;
     }
@@ -99,6 +117,12 @@ const Canvas: React.FC<CanvasProps> = ({
     }
   };
 
+  const handleDoubleClick = () => {
+    if (selectedTool === 'polygon') {
+      finishPolygon();
+    }
+  };
+
   return (
     <main className="canvas-container">
       <svg 
@@ -110,6 +134,7 @@ const Canvas: React.FC<CanvasProps> = ({
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
+        onDoubleClick={handleDoubleClick}
       >
         <rect width="100%" height="100%" fill="#ffffff" />
         {shapes.map(renderShape)}

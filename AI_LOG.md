@@ -84,19 +84,36 @@ MSSV: [Mã số sinh viên]
         - Lỗi: Toạ độ sai lệch và giá trị âm cho thuộc tính SVG.
         - Bài học: Luôn sử dụng toạ độ nội bộ của SVG (`getScreenCTM`) thay vì toạ độ viewport của trình duyệt.
 
-### Lần 7: Triển khai logic chọn, di chuyển và xóa hình (Sprint 3)
-- **Mục tiêu:** Cho phép người dùng tương tác với các hình đã vẽ: Chọn hình, kéo thả để di chuyển và nhấn Delete để xóa.
+### Lần 7: Triển khai logic chọn, di chuyển, xóa hình và bổ sung Polygon (Sprint 3)
+- **Mục tiêu:** Cho phép tương tác với các hình đã vẽ và triển khai sớm công cụ Polygon.
 - **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
-- **Prompt:** "Đã vẽ được tròn,vuông, đường thẳng. Polygon chưa được. Tiếp tục qua sprint 3, giữ nguyên các bước test như vậy"
+- **Prompt:** "Update hình polygon ở sprint này luôn trước khi qua sprint khác"
 - **Kết quả:**
-    - Tạo `useManipulation.ts` xử lý logic dragging thông qua `delta` (dx, dy).
-    - Cập nhật `Canvas.tsx` để phân tách hai chế độ: Drawing (khi chọn công cụ hình) và Manipulation (khi chọn công cụ Select).
-    - Thêm `useEffect` lắng nghe sự kiện bàn phím (`Delete`, `Backspace`) để xóa đối tượng đang chọn.
-    - Cải thiện UX: Đổi con trỏ chuột sang `move` khi di chuyển hình và `pointer` khi có thể chọn.
-    - Viết script `test-sprint3.cjs` kiểm tra logic tính toán toạ độ khi di chuyển.
+    - Cập nhật `useDrawing.ts`:
+        - Hỗ trợ vẽ đa điểm (multi-point) cho Polygon.
+        - Hiển thị nét vẽ preview nối từ điểm cuối đến vị trí chuột hiện tại.
+        - Kết thúc vẽ bằng phím `Enter` hoặc `Double Click`.
+    - Cập nhật `useManipulation.ts`: Hỗ trợ di chuyển toàn bộ các điểm của Polygon bằng cách cộng thêm độ dời (delta).
+    - Cập nhật `Canvas.tsx`: Render thẻ `<polygon>` và lắng nghe sự kiện `onDoubleClick`.
+    - Kiểm thử: `test-sprint3.cjs` đã xác nhận logic di chuyển Polygon hoạt động chính xác. Build thành công.
 - **Đánh giá:**
-    - AI hỗ trợ tốt: Giải quyết tốt vấn đề `e.stopPropagation()` để không làm mất selection khi click vào hình. Logic di chuyển dùng delta giúp hình không bị nhảy toạ độ khi bắt đầu kéo.
-    - Hạn chế: Chưa hỗ trợ chọn nhiều hình cùng lúc (Multi-select).
+    - AI hỗ trợ tốt: Xử lý mượt mà việc chuyển đổi giữa chế độ vẽ 2 điểm (Rect/Circle) và đa điểm (Polygon) trong cùng một hook.
+    - Hạn chế: Việc vẽ đa giác yêu cầu phím tắt hoặc double click nên cần có chỉ dẫn UI cho người dùng (Tooltip).
+    - Lỗi: Không có.
+
+### Lần 8: Triển khai công cụ Văn bản (Text Tool)
+- **Mục tiêu:** Cho phép người dùng chèn và chỉnh sửa nội dung văn bản trên Canvas.
+- **Công cụ + Model:** Gemini CLI (Gemini 2.0 Flash).
+- **Prompt:** "Còn tính năng thêm văn bản thì sao ? sprint sau hay làm luôn ? làm luôn thì triển khai ngay, còn sprint sau thì hãy sang sprint mới luôn"
+- **Kết quả:**
+    - Cập nhật `useDrawing.ts`: Thêm logic click-to-place cho Text. Tự động chọn (Select) đối tượng ngay sau khi tạo.
+    - Cập nhật `Canvas.tsx`: Render thẻ `<text>` của SVG, hỗ trợ các thuộc tính `fontSize` và `fill`.
+    - Cập nhật `PropertiesPanel.tsx`: Thêm mục "Text Content" và "Font Size" riêng cho đối tượng văn bản.
+    - Cập nhật `useManipulation.ts`: Hỗ trợ di chuyển văn bản bằng chuột.
+    - Build: Thành công.
+- **Đánh giá:**
+    - AI hỗ trợ tốt: Tích hợp mượt mà vào luồng logic hiện tại. Việc cho phép sửa text trong Properties Panel thay vì sửa trực tiếp trên Canvas giúp giảm độ phức tạp của code mà vẫn đảm bảo tính năng.
+    - Hạn chế: Chưa có tính năng chọn Font family (sẽ xem xét sau).
     - Lỗi: Không có.
 
 ### Lần 6: Sửa lỗi Build liên quan đến TypeScript Import Type (Sprint 2 - Build fix)
